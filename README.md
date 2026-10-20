@@ -27,7 +27,7 @@ that choice matters.
    *before* fitting `StandardScaler` (fit on training data only, to avoid leakage)
 3. **Model 1 — KNN** — trained at k=5, evaluated with a classification report and
    confusion matrix; swept k=1–20 to find the optimum
-4. **Model 2 — Decision Tree** — trained both a default (unpruned) tree and a tuned
+4. **Model 2 — Decision Tree** — trained both a default (unpruned) tree and a pruned
    version (`max_depth=5`, `min_samples_split=10`), compared, and visualised feature
    importances
 5. **Cross-Validation** — 5-fold `StratifiedKFold` with `shuffle=True`, used to confirm
@@ -55,6 +55,21 @@ was genuine and not an artefact of a lucky split.
 
 ---
 
+## ▶️ How to Run
+
+1. Download the [Secondary Mushroom Dataset](https://archive.ics.uci.edu/dataset/848/secondary+mushroom+dataset) and save `secondary_data_shuffled.csv` (the shuffled release; see the debugging note above) in this folder.
+2. Install the dependencies:
+   ```bash
+   pip install pandas numpy matplotlib seaborn scikit-learn
+   ```
+3. Run the analysis:
+   ```bash
+   python Mushroom_Classification.py
+   ```
+   The script prints the evaluation results and saves the `chart_*.png` files.
+
+---
+
 ## 🛠️ Technologies Used
 
 Python 3 · Pandas, NumPy · Scikit-learn (KNN, Decision Tree, StandardScaler,
@@ -68,14 +83,14 @@ LabelEncoder, StratifiedKFold) · Matplotlib, Seaborn
 |---|---|---|
 | KNN (k=5) | 99.93% | 99.89% ± 0.03% |
 | Decision Tree (default) | 99.85% | — |
-| Decision Tree (tuned, max_depth=5) | 67.13% | 66.99% ± 0.31% |
+| Decision Tree (pruned, max_depth=5) | 67.13% | 66.99% ± 0.31% |
 
 - KNN and the unpruned Decision Tree both perform very well on this dataset — its 20
   features (particularly stem and cap measurements) separate the two classes cleanly.
 - Once cross-validation was run correctly (shuffled data, shuffled folds), CV results
   closely track the single-split results for both models — the earlier apparent
   instability was a data-ordering bug, not a real modelling issue.
-- The tuned (max_depth=5) Decision Tree trades a substantial amount of accuracy for
+- The pruned (max_depth=5) Decision Tree trades a substantial amount of accuracy for
   interpretability compared to the unpruned tree and KNN — depth-5 is too shallow to
   capture this dataset's structure, which is a useful illustration of the
   accuracy/interpretability trade-off in tree pruning.
