@@ -60,7 +60,7 @@ was genuine and not an artefact of a lucky split.
 1. Download the [Secondary Mushroom Dataset](https://archive.ics.uci.edu/dataset/848/secondary+mushroom+dataset) and save `secondary_data_shuffled.csv` (the shuffled release; see the debugging note above) in this folder.
 2. Install the dependencies:
    ```bash
-   pip install pandas numpy matplotlib seaborn scikit-learn
+   pip install -r requirements.txt
    ```
 3. Run the analysis:
    ```bash
